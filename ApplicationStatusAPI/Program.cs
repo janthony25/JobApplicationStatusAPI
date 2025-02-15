@@ -1,4 +1,6 @@
 using ApplicationStatusAPI.Data;
+using ApplicationStatusAPI.Repository;
+using ApplicationStatusAPI.Repository.IRepository;
 using Microsoft.EntityFrameworkCore;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -13,6 +15,9 @@ builder.Services.AddSwaggerGen();
 builder.Services.AddDbContext<DataContext>(options => options.UseSqlServer(
     builder.Configuration.GetConnectionString("DefaultConnection")  
     ));
+
+// Repositories
+builder.Services.AddScoped<IJobApplicationRepository, JobApplicationStatusRepository>();
 
 var app = builder.Build();
 
