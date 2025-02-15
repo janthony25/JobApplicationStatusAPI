@@ -6,5 +6,6 @@ namespace ApplicationStatusAPI.Repository.IRepository
     public interface IJobApplicationRepository
     {
         Task<List<JobApplicationListDto>> GetJobApplicationListAsync();
+        
     }
 }

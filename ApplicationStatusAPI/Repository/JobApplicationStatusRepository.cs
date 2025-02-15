@@ -29,6 +29,9 @@ namespace ApplicationStatusAPI.Repository
                                 JobTitle = ja.JobTitle,
                                 DateSubmitted = ja.DateSubmitted,
                                 LocationName = ja.Location.LocationName,
+                                SubmissionStatusName = ja.SubmissionStatus.SubmissionStatusName,
+                                ApplicationStatusName = ja.applicationStatus.ApplicationStatusName,
+                                SourceName = ja.Source.SourceName,
                                 DateEdited = ja.DateEdited
                             }).ToListAsync();
 

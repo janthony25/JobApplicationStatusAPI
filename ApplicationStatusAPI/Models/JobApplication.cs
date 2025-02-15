@@ -24,5 +24,17 @@ namespace ApplicationStatusAPI.Models
         public int LocationId { get; set; }
         public Location Location { get; set; }
 
+        // Submission Status
+        public int SubmissionStatusId { get; set; }
+        public SubmissionStatus SubmissionStatus { get; set; }
+
+        // Application Status
+        public int ApplicationStatusId { get; set; }
+        public ApplicationStatus applicationStatus { get; set; }
+
+        // Source
+        public int SourceId { get; set; }
+        public Source Source { get; set; }  
+
     }
 }

@@ -10,6 +10,9 @@ namespace ApplicationStatusAPI.Models.Dto
         public string JobTitle { get; set; }
         public DateTime DateSubmitted { get; set; }
         public string LocationName { get; set; }
+        public string SubmissionStatusName { get; set; }
+        public string ApplicationStatusName { get; set; }
+        public string SourceName { get; set; }  
         public DateTime? DateEdited { get; set; }
 
     }

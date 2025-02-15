@@ -4,6 +4,7 @@ using ApplicationStatusAPI.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,11 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace ApplicationStatusAPI.Migrations
 {
     [DbContext(typeof(DataContext))]
-    partial class DataContextModelSnapshot : ModelSnapshot
+    [Migration("20250215195807_Added statuses")]
+    partial class Addedstatuses
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -36,7 +39,7 @@ namespace ApplicationStatusAPI.Migrations
 
                     b.HasKey("ApplicationStatusId");
 
-                    b.ToTable("ApplicationStatuses", (string)null);
+                    b.ToTable("ApplicationStatus");
 
                     b.HasData(
                         new
@@ -106,7 +109,7 @@ namespace ApplicationStatusAPI.Migrations
 
                     b.HasIndex("SubmissionStatusId");
 
-                    b.ToTable("JobApplications", (string)null);
+                    b.ToTable("JobApplications");
 
                     b.HasData(
                         new
@@ -137,7 +140,7 @@ namespace ApplicationStatusAPI.Migrations
 
                     b.HasKey("LocationId");
 
-                    b.ToTable("Locations", (string)null);
+                    b.ToTable("Locations");
 
                     b.HasData(
                         new
@@ -186,7 +189,7 @@ namespace ApplicationStatusAPI.Migrations
 
                     b.HasKey("SourceId");
 
-                    b.ToTable("Sources", (string)null);
+                    b.ToTable("Source");
 
                     b.HasData(
                         new
@@ -210,7 +213,7 @@ namespace ApplicationStatusAPI.Migrations
 
                     b.HasKey("SubmissionStatusId");
 
-                    b.ToTable("SubmissionStatuses", (string)null);
+                    b.ToTable("SubmissionStatus");
 
                     b.HasData(
                         new
