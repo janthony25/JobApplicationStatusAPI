@@ -8,12 +8,12 @@ namespace ApplicationStatusAPI.Controllers
     [ApiController]
     public class LocationsController : ControllerBase
     {
-        private readonly ILocationRepository _locationRepository;
+        private readonly IUnitOfWork _unitOfWork;
         private readonly ILogger<LocationsController> _logger;
 
-        public LocationsController(ILocationRepository locationRepository, ILogger<LocationsController> logger)
+        public LocationsController(IUnitOfWork unitOfWork, ILogger<LocationsController> logger)
         {
-            _locationRepository = locationRepository;
+            _unitOfWork = unitOfWork;
             _logger = logger;
         }
 
@@ -24,7 +24,7 @@ namespace ApplicationStatusAPI.Controllers
             {
                 _logger.LogInformation("Request to fetch locations list");
 
-                var locations = await _locationRepository.GetLocationsAsync();  
+                var locations = await _unitOfWork.Location.GetLocationsAsync();
                 return Ok(locations);
             }
             catch (Exception ex)

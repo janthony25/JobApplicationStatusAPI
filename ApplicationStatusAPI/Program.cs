@@ -17,8 +17,8 @@ builder.Services.AddDbContext<DataContext>(options => options.UseSqlServer(
     ));
 
 // Repositories
-builder.Services.AddScoped<IJobApplicationRepository, JobApplicationStatusRepository>();
-builder.Services.AddScoped<ILocationRepository, LocationRepository>();  
+
+builder.Services.AddScoped<IUnitOfWork, UnitOfWork>();
 
 var app = builder.Build();
 

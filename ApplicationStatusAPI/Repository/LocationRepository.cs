@@ -10,10 +10,10 @@ namespace ApplicationStatusAPI.Repository
         private readonly DataContext _data;
         private readonly ILogger<ILocationRepository> _logger;
 
-        public LocationRepository(DataContext data, ILogger<ILocationRepository> logger)
+        public LocationRepository(DataContext data, ILoggerFactory loggerFactory)
         {
             _data = data;
-            _logger = logger;
+            _logger = loggerFactory.CreateLogger<LocationRepository>();
         }
 
         public async Task<List<Location>> GetLocationsAsync()

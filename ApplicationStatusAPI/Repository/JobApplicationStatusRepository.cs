@@ -1,4 +1,5 @@
 ﻿using ApplicationStatusAPI.Data;
+using ApplicationStatusAPI.Models;
 using ApplicationStatusAPI.Models.Dto;
 using ApplicationStatusAPI.Repository.IRepository;
 using Microsoft.EntityFrameworkCore;
@@ -10,11 +11,37 @@ namespace ApplicationStatusAPI.Repository
         private readonly DataContext _data;
         private readonly ILogger<JobApplicationStatusRepository> _logger;
 
-        public JobApplicationStatusRepository(DataContext data, ILogger<JobApplicationStatusRepository> logger)
+        public JobApplicationStatusRepository(DataContext data, ILoggerFactory loggerFactory)
         {
             _data = data;
-            _logger = logger;
+            _logger = loggerFactory.CreateLogger<JobApplicationStatusRepository>();
         }
+
+        public async Task AddJobApplicationAsync(AddJobApplicationDto dto)
+        {
+            try
+            {
+                var newJobApplication = new JobApplication
+                {
+                    JobLink = dto.JobLink,
+                    CompanyName = dto.CompanyName,
+                    JobTitle = dto.JobTitle,
+                    LocationId = dto.LocationId,
+                    SubmissionStatusId = dto.SubmissionStatusId,
+                    ApplicationStatusId = dto.ApplicationStatusId,
+                    SourceId = dto.SourceId
+                };
+
+                _data.JobApplications.Add(newJobApplication);
+                await _data.SaveChangesAsync();
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex, "An error occurred while adding new job application");
+                throw;
+            }
+        }
+
         public async Task<List<JobApplicationListDto>> GetJobApplicationListAsync()
         {
             try
@@ -30,7 +57,7 @@ namespace ApplicationStatusAPI.Repository
                                 DateSubmitted = ja.DateSubmitted,
                                 LocationName = ja.Location.LocationName,
                                 SubmissionStatusName = ja.SubmissionStatus.SubmissionStatusName,
-                                ApplicationStatusName = ja.applicationStatus.ApplicationStatusName,
+                                ApplicationStatusName = ja.ApplicationStatus.ApplicationStatusName,
                                 SourceName = ja.Source.SourceName,
                                 DateEdited = ja.DateEdited
                             }).ToListAsync();

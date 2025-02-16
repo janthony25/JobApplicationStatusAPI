@@ -9,12 +9,12 @@ namespace ApplicationStatusAPI.Controllers
     [ApiController]
     public class JobApplicationController : ControllerBase
     {
-        private readonly IJobApplicationRepository _jobApplicationRepository;
+        private readonly IUnitOfWork _unitOfWork;
         private readonly ILogger<JobApplicationController> _logger;
 
-        public JobApplicationController(IJobApplicationRepository jobApplicationRepository, ILogger<JobApplicationController> logger)
+        public JobApplicationController(IUnitOfWork unitOfWork, ILogger<JobApplicationController> logger)
         {
-            _jobApplicationRepository = jobApplicationRepository;
+            _unitOfWork = unitOfWork;
             _logger = logger;
         }
 
@@ -25,13 +25,30 @@ namespace ApplicationStatusAPI.Controllers
             {
                 _logger.LogInformation("Request to fetch job application list.");
 
-                var applicationList = await _jobApplicationRepository.GetJobApplicationListAsync();
+                var applicationList = await _unitOfWork.JobApplication.GetJobApplicationListAsync();
                 return Ok(applicationList);
             }
             catch(Exception ex)
             {
                 _logger.LogError(ex, "An error occurred while fetching job application list."); 
                 return StatusCode(500, new {message = "An error occurred while fetching job application list." });
+            }
+        }
+
+        [HttpPost("addJob")]
+        public async Task<IActionResult> AddNewJob([FromBody] AddJobApplicationDto dto)
+        {
+            try
+            {
+                if (!ModelState.IsValid) return BadRequest(ModelState);
+
+                await _unitOfWork.JobApplication.AddJobApplicationAsync(dto);
+                return Ok();
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex, "An error occurred while adding new job.");
+                return StatusCode(500, new { message = "An error occurred while adding new job." });
             }
         }
     }

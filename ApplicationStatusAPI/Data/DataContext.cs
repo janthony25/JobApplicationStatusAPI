@@ -70,7 +70,7 @@ namespace ApplicationStatusAPI.Data
                 .HasForeignKey(ja => ja.SubmissionStatusId);
 
             modelBuilder.Entity<JobApplication>()
-                .HasOne(ja => ja.applicationStatus)
+                .HasOne(ja => ja.ApplicationStatus)
                 .WithMany()
                 .HasForeignKey(ja => ja.ApplicationStatusId);
 
